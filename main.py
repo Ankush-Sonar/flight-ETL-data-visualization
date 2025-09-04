@@ -9,15 +9,8 @@ if __name__ == "__main__":
     transform= Transform()
     data = transform.transform_data(data)
     print(data.head())  # Display the first few rows of the extracted data
-    # hello
-    # hello
-    # hello
-
-    # hello
-    # hello# hello
-    # hello# hello
-    # hello
-    # hello
-    # hello
-    # hello
-    # hello
+    data.to_csv("data/transformed_flight_data.csv", index=False)
+    print("Transformed data saved to 'data/transformed_flight_data.csv'")
+    print(data.dtypes)
+    print(data.columns)
+    # You can add more processing or saving logic here as needed
