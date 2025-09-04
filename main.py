@@ -14,3 +14,4 @@ if __name__ == "__main__":
     print(data.dtypes)
     print(data.columns)
     # You can add more processing or saving logic here as needed
+    # additional_info,arrival_time,dep_time,duration,flight,journey_date,price,route
