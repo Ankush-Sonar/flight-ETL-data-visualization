@@ -38,3 +38,7 @@ class Transform:
         # Drop invalid "nan" string codes
         airport = airport[airport['code'] != 'nan']
         return airport
+    
+    def price_detail(self, data):
+
+        return price_detail
