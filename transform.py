@@ -40,5 +40,10 @@ class Transform:
         return airport
     
     def price_detail(self, data):
-
-        return price_detail
+        price = data[['price']].drop_duplicates().reset_index(drop=True)
+        price['currency'] = 'INR'
+        price['price_id'] = price.index + 1 
+        return price
+    
+    
+    
