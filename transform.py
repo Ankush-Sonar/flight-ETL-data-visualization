@@ -62,3 +62,15 @@ class Transform:
         route_detail = route_detail[['route_dtls_id', 'airport_id', 'route','code']]
         route_detail['airport_id'] = route_detail['airport_id'].fillna(-1)
         route_detail['airport_id'] = route_detail['airport_id'].astype(int)
+
+    def flight(self, data, airline, airport, price, route_detail):
+        # Merge with airline, keep only relevant columns
+        journey_table = journey_table.merge(
+            airline[['airline', 'airline_id']], on='airline', how='left'
+        )
+
+        # Merge to get source airport info, rename duplicated airport_id as source_id
+        journey_table = journey_table.merge(
+            airport, left_on='source', right_on='name', how='left',
+            suffixes=('', '_source')
+        ).rename(columns={'airport_id': 'source_id'})
