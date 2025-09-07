@@ -46,4 +46,19 @@ class Transform:
         return price
     
     
-    
+    def route_detail(self,data):
+        route_detail = (
+        data['route']
+        .str.strip()
+        .str.split(',')
+        .explode()
+        .reset_index()
+        .rename(columns={'index': 'route_dtls_id', 'route': 'route'})
+        )
+        route_detail["route"] = route_detail["route"].str.strip()
+
+        route_detail['route_dtls_id'] += 1
+        route_detail = route_detail.merge(airport, left_on='route', right_on='code', how='left')
+        route_detail = route_detail[['route_dtls_id', 'airport_id', 'route','code']]
+        route_detail['airport_id'] = route_detail['airport_id'].fillna(-1)
+        route_detail['airport_id'] = route_detail['airport_id'].astype(int)
