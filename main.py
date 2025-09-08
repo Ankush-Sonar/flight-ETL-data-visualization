@@ -8,5 +8,5 @@ if __name__ == "__main__":
     
     transform= Transform()
     data = transform.transform_data(data)
-    print(data.head())  
+    print(data)
 
