@@ -2,16 +2,19 @@ import pandas as pd
 
 class Transform:
     def transform_data(self, data):
-        return data
+        airline = self.airline(data)
+        airport = self.airport(data)
+        price = self.price_detail(data)
+        route_detail = self.route_detail(data)
+        flight = self.flight(data, airline, airport, price, route_detail)
+        return flight, airline, airport, price, route_detail
+
 
     def airline(self, data):
         airline = data[['airline', 'airline_id']].drop_duplicates().reset_index(drop=True)
         airline['airline_id'] = airline.index + 1
         return airline
-    
-
-
-        
+       
     def airport(self, data):
         # Select needed columns
         airport = data[['source', 'destination', 'route']].copy()
