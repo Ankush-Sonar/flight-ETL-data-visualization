@@ -2,16 +2,31 @@ import pandas as pd
 
 class Transform:
     def transform_data(self, data):
+        data['Route'] = data['Route'].str.replace('?', ',', regex=False)
+        data = data.rename(columns={
+            "Airline": "airline",
+            "Date_of_Journey": "journey_date",
+            "Source": "source",
+            "Destination": "destination",
+            "Route": "route",
+            "Dep_Time": "dep_time",
+            "Arrival_Time": "arrival_time",
+            "Duration": "duration",
+            "Total_Stops": "total_stops",
+            "Additional_Info": "additional_info",
+            "Price": "price"
+        })
+
         airline = self.airline(data)
         airport = self.airport(data)
         price = self.price_detail(data)
-        route_detail = self.route_detail(data)
+        route_detail = self.route_detail(airport,data)
         flight = self.flight(data, airline, airport, price, route_detail)
         return flight, airline, airport, price, route_detail
 
 
     def airline(self, data):
-        airline = data[['airline', 'airline_id']].drop_duplicates().reset_index(drop=True)
+        airline = data[['airline']].drop_duplicates().reset_index(drop=True)
         airline['airline_id'] = airline.index + 1
         return airline
        
@@ -49,7 +64,7 @@ class Transform:
         return price
     
     
-    def route_detail(self,data):
+    def route_detail(self,airport,data):
         route_detail = (
         data['route']
         .str.strip()
@@ -67,6 +82,8 @@ class Transform:
         route_detail['airport_id'] = route_detail['airport_id'].astype(int)
 
     def flight(self, data, airline, airport, price, route_detail):
+        journey_table = data.copy()
+        
         # Merge with airline, keep only relevant columns
         journey_table = journey_table.merge(
             airline[['airline', 'airline_id']], on='airline', how='left'
