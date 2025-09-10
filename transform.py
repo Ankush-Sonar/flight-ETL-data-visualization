@@ -94,3 +94,16 @@ class Transform:
             airport, left_on='source', right_on='name', how='left',
             suffixes=('', '_source')
         ).rename(columns={'airport_id': 'source_id'})
+
+        # Merge to get destination airport info, rename duplicated airport_id as destination_id
+        journey_table = journey_table.merge(
+            airport, left_on='destination', right_on='name', how='left',
+            suffixes=('', '_destination')
+        ).rename(columns={'airport_id': 'destination_id'})
+
+        # Merge price
+        journey_table = journey_table.merge(
+            price[['price', 'price_id']], on='price', how='left'
+        )
+
+        
