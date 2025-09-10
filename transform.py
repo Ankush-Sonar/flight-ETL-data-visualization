@@ -17,6 +17,16 @@ class Transform:
             "Price": "price"
         })
 
+        data['route']= data['route'].astype(str)
+        data['journey_id'] = data.index + 1
+        data['arrival_time']= data['arrival_time'].str.split(' ').apply(lambda x: x[1] if len(x)>1 else x[0])
+        data['departure'] = data['journey_date'].str.cat(data['dep_time'], sep=' ')
+        data["departure"] = pd.to_datetime(data["departure"], format='%d-%m-%Y %H:%M')
+        data['arrival_time'] = data['arrival_time'].str.strip()
+        data['arrival_time'] = pd.to_datetime(data['arrival_time'], format='%H:%M').dt.time
+        data['duration'] = pd.to_timedelta(data['duration'].str.replace('h', ' hours ').str.replace('m', ' minutes'))
+        data['arrival'] = data['departure'] + data['duration']
+
         airline = self.airline(data)
         airport = self.airport(data)
         price = self.price_detail(data)
@@ -80,6 +90,7 @@ class Transform:
         route_detail = route_detail[['route_dtls_id', 'airport_id', 'route','code']]
         route_detail['airport_id'] = route_detail['airport_id'].fillna(-1)
         route_detail['airport_id'] = route_detail['airport_id'].astype(int)
+        return route_detail
 
     def flight(self, data, airline, airport, price, route_detail):
         journey_table = data.copy()
@@ -106,4 +117,19 @@ class Transform:
             price[['price', 'price_id']], on='price', how='left'
         )
 
-        
+        # Merge route_detail by journey_id = route_id (assuming these have same values but different column names)
+        journey_table = journey_table.merge(
+            route_detail[['route_dtls_id']], left_on='journey_id', right_on='route_dtls_id', how='left').groupby('journey_id').first().reset_index()
+
+        # Select only needed columns finally
+        journey_table = journey_table[
+            ['journey_id', 'airline_id', 'source', 'source_id', 'destination', 'destination_id', 'price_id', 'route_dtls_id','additional_info','departure','arrival']
+        ]
+
+        journey_table['total_stops'] = (
+            data['total_stops']
+            .str.strip()
+            .replace({'non-stop': 1, '1 stop': 1, '2 stops': 2, '3 stops': 3, '4 stops': 4, 'NA': 0, 'inf': 0})
+            .fillna(0)
+            .astype(int)
+        )
