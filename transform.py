@@ -133,3 +133,6 @@ class Transform:
             .fillna(0)
             .astype(int)
         )
+        return journey_table
+
+
