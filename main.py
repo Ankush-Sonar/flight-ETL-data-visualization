@@ -1,5 +1,6 @@
 from extract import Extract
 from transform import Transform
+from load import Load
 
 if __name__ == "__main__":
     path = "data/Flight_data.csv"
@@ -8,5 +9,8 @@ if __name__ == "__main__":
     
     transform= Transform()
     data = transform.transform_data(data)
-    print(data)
+    flight, airline, airport, price, route_detail = data
+    
+    loader = Load()
+    loader.load_data(flight, airline, airport, price, route_detail)
 
