@@ -1,4 +1,7 @@
-# Flight ETL Data Visualization
+# Flight ETL Data Visualization 📈
+
+## Work Flow
+![Alt text](Flow_Diagram.png)
 
 ## 📌 Overview
 
@@ -49,28 +52,33 @@ Install sqlalchemy:
 ```bash
 pip install pandas sqlalchemy pyodbc
 ```
+--- 
 
-Prepare SQL Server:
+## Prepare SQL Server:
 - Ensure the SQL Server is running.
 - Create a database (name as per your config).
 - Grant access to user credentials used in scripts.
 
+## Entity-Relationship Diagram
+![Alt text](ER_Diagram_Flight_Analysis.png)
+
 Configure connection settings:
 - Update connection strings in load.py (or equivalent) to point to your SQL Server hostname, database, user/password, or integrated authentication.
 
-▶️ Usage
+---
+
+## ▶️ Usage
 
 Run the ETL pipeline in sequence:
 
-```bash
-Extraction
-```
+Extraction:
+
 ```bash
 python extract.py
 ```
-```bash
-Transformation
-```
+
+Transformation:
+
 ```bash
 python transform.py
 ```
@@ -85,31 +93,28 @@ Load into database
 python load.py
 ```
 
-Visualization
+## 📈 Visualization
 
 1. Open Flight_analysis.pbix in Power BI.
 2. Connect to SQL Server.
 3. Build or view dashboards.
+--- 
 
-Alternatively, run:
-```bash
-python main.py
-```
-or use main.ipynb for exploration inside Jupyter Notebook.
-
-🗄️ Data Model & Normalization
+## 🗄️ Data Model & Normalization
 
 - The schema is normalized: redundant information is removed.
 - related entities are stored in distinct tables.
 - Likely tables include: flights, carriers, airports, delay types, routes.
 - Primary and foreign keys ensure referential integrity.
+---
 
-📊 Examples of Analyses / Dashboards
+## 📊 Examples of Analyses / Dashboards
 
 - Flight delays by airline, airport, or route
 - Time-series analysis of cancellations
 - Comparison of arrival vs departure delays
 - Top routes by traffic volume
+---
 
 🔧 Configuration & Customization
 
@@ -117,14 +122,18 @@ or use main.ipynb for exploration inside Jupyter Notebook.
 - Modify transform.py for new fields or schema changes.
 - Extend tablestructure.py with new dimensions.
 - In Power BI, adjust visuals or add new reports.
+---
 
-🛠️ Troubleshooting
-- Issue	Possible Cause	Solution
-- Connection errors to SQL Server	Wrong credentials / network issues	Check connection string; ensure server allows remote access
-- Missing or malformed data	CSV schema changed / null values	Add validations in transform.py, handle nulls, clean datatypes
--  ashboard not refreshing	Query fails / wrong table names	Verify schema; ensure PBIX is linked to correct tables
+## 🛠️ Troubleshooting
+
+| Issue                           | Possible Cause                     | Solution                                                                 |
+|---------------------------------|------------------------------------|--------------------------------------------------------------------------|
+| Connection errors to SQL Server | Wrong credentials / network issues | Check connection string; ensure server allows remote access              |
+| Missing or malformed data       | CSV schema changed / null values   | Add validations in `transform.py`, handle nulls, clean datatypes         |
+| Dashboard not refreshing        | Query fails / wrong table names    | Verify schema; ensure PBIX is linked to correct tables                   |
+---
   
-📌 Future Improvements
+## 📌 Future Improvements
 
 - Automate with Airflow or cron jobs
 - Add unit tests for transform logic
