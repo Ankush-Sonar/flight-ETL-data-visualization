@@ -1,6 +1,29 @@
 # Flight ETL Data Visualization 📈
 
-## Work Flow
+## Visualization : -
+<img width="1405" height="787" alt="image" src="https://github.com/user-attachments/assets/005c402d-1fe9-41b3-83aa-7dab08424f4b" />
+
+## Power BI Dashboard: Key Visualizations
+
+**Average Price per Route:** This chart highlights route-specific pricing patterns. For example, routes like Delhi–Cochin show higher average prices (10.5K), while others such as Kolkata and Hyderabad present more moderate pricing.
+
+**Journey Volume by Airline:**: Bar charts display the count of journeys by airline, with Jet Airways (3.85K), IndiGo (2.05K), and Air India (1.75K) leading. This helps pinpoint popular carriers and market shares across different regions.
+
+**Departure Count by Month:**
+Monthly breakdowns reveal seasonal demand, with May (3.47K) and June (3.41K) showing peak traffic volumes. Such insights guide planning for peak vs. off-peak flight operations.
+
+**Total Prices and Duration Analysis:**
+Aggregate metrics include a total sum of price (97.08M97.08M), a count of journeys (57M57M), and total flight duration hours (114K114K). These indicators expose operational volumes and average trip characteristics.
+
+**Market Segmentation and Premium Classes:**
+Visuals segment journey counts by class - Multiple Carriers, Premium Economy, Jet Airways Business, etc. - enabling fine-grained analysis of luxury travel trends and product mix effectiveness.
+
+**Geographic Insights:**
+Destination-based visualizations, possibly using Power BI maps, provide spatial insights into flight patterns and popular destinations (supported by Esri maps integration).
+
+--- 
+
+## Work Flow: -
 ![Alt text](Flow_Diagram.png)
 
 ## 📌 Overview
