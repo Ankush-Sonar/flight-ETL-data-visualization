@@ -1,7 +1,8 @@
 # Flight ETL Data Visualization 📈
 
 ## Visualization : -
-<img width="1405" height="787" alt="image" src="https://github.com/user-attachments/assets/005c402d-1fe9-41b3-83aa-7dab08424f4b" />
+<img width="1378" height="772" alt="image" src="https://github.com/user-attachments/assets/6fbc4796-e9f5-413c-ab08-27ca4bef0961" />
+
 
 ## Power BI Dashboard: Key Visualizations
 
